@@ -19,6 +19,7 @@ Pluto is an AI-powered wealth copilot for iOS and Android. This Flutter app impl
 API_BASE_URL=https://mock.pluto.local
 WS_URL=wss://mock.pluto.local/ws
 ```
+Note: Yahoo Finance integration uses public endpoints and requires no extra client-side keys.
 2. Get packages and run:
 ```
 flutter pub get
@@ -28,7 +29,7 @@ flutter run
 ## Architecture
 
 - State management: Provider
-- Services: ApiClient (env-based), MockServices for dev
+- Services: ApiClient (env-based), YahooFinanceService (quotes), MockServices for dev
 - Storage: SharedPreferences wrapper
 - Routing: AppRouter (centralized)
 - Theming: Material 3 with ColorScheme.surface
