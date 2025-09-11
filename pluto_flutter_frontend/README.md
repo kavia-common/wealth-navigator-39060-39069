@@ -14,13 +14,14 @@ Pluto is an AI-powered wealth copilot for iOS and Android. This Flutter app impl
 
 ## Run
 
-1. Create a `.env` file at project root with the following (example):
+1. Create a `.env` file at project root (or copy `.env.example`):
 ```
 API_BASE_URL=https://mock.pluto.local
 WS_URL=wss://mock.pluto.local/ws
 ```
 Note: Yahoo Finance integration uses public endpoints and requires no extra client-side keys.
-2. Get packages and run:
+2. Ensure the Flutter entrypoint exists at `lib/main.dart` (restored by this change).
+3. Get packages and run:
 ```
 flutter pub get
 flutter run
