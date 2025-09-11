@@ -1,5 +1,13 @@
 # Pluto Frontend Integration Notes
 
+## Providers and Features
+- MarketProvider: quotes from YahooFinanceService; replace with backend market endpoints to unify data and signals.
+- RatingsProvider: compute demo traffic-light from momentum; replace with GET /ratings/{symbol}.
+- AIProvider: mock Q&A; replace with POST /ai/qa { symbol, question }.
+- PortfolioProvider: mock linking; integrate with POST /portfolio/link/plaid and /portfolio/link/broker, plus GET /portfolio/summary.
+- LearningProvider: mock lessons and leaderboard; replace with GET /learn/lessons and GET /community/leaderboard.
+- AppStateProvider: local premium flag; replace with real entitlements and backend verification.
+
 ## Backend Endpoints
 - Configure API_BASE_URL in `.env` to point to your backend.
 - Replace MockServices with real ApiClient calls:
@@ -12,25 +20,22 @@
   - Simulator & Passive income can be computed client-side or provided by backend.
 
 ## Yahoo Finance Integration (Frontend)
-- The app now integrates public Yahoo Finance quote endpoints via `YahooFinanceService` for near real-time prices.
-- Symbols used by default: AAPL, MSFT, NVDA, TSLA, AMZN, GOOGL, META, NFLX, AMD, INTC.
-- MarketProvider replaces top movers with real quotes, computes a simple Buy/Hold/Sell signal from momentum (demo only).
-- For production usage:
-  - Consider proxying Yahoo requests through your backend to control rate limits and add caching.
-  - Move any keys/secrets to backend and never store in the mobile app.
-  - Replace the simple signal heuristic with backend-provided ratings.
+- Uses public Yahoo quote endpoint via `YahooFinanceService` for near real-time prices (no secrets required).
+- Default symbols: AAPL, MSFT, NVDA, TSLA, AMZN, GOOGL, META, NFLX, AMD, INTC.
+- For production:
+  - Proxy Yahoo via backend for rate limits and caching.
+  - Replace momentum heuristic with backend-provided composite ratings.
 
 ## Monetization
-- AppStateProvider.isPremium flag toggles premium UI (currently stored locally).
-- Integrate real entitlements (StoreKit BillingClient) and set flag via backend.
+- AppStateProvider.isPremium flag toggles premium UI (stored via SharedPreferences).
+- Integrate StoreKit/BillingClient + backend entitlements for real monetization and multi-tier features.
 
 ## WebSocket / Real-time
 - Use WS_URL from `.env` to connect to signals/alerts channel.
-- Not implemented in this mock; ready for future integration.
+- Not implemented in this mock; providers are structured to add a WebSocket layer later.
 
 ## Security
 - Do not hardcode secrets. Use `.env` and secure key management for release builds.
-- No Yahoo secrets are stored client-side; the current integration uses public endpoints.
 
 ## Tests
-- Basic placeholder test included. Add widget and integration tests per feature as backend stabilizes.
+- A placeholder test exists. Add feature-level widget and integration tests as APIs stabilize.
